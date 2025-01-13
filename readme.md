@@ -130,9 +130,9 @@ bundle install
 
 ### Mozilla
 
-- [<picture>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
-- [<source>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source)
-- [<img>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img)
+- [Properties of <picture>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+- [Properties of <source>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source)
+- [Properties of <img>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img)
 - [Responsive images](https://developer.mozilla.org/en-US/docs/Web/HTML/Responsive_images)
 - [Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 
