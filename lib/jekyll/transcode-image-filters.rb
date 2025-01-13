@@ -3,8 +3,6 @@ require "mini_magick"
 
 module Jekyll
   module TranscodeImageFilters
-    HASH_LENGTH = 32
-
     # Computes the name of the file in the cache.
     # @param absolute_path_source [String] Full path to the source file
     # @param resolution [String] As an example: 900x900
@@ -12,7 +10,7 @@ module Jekyll
     # @return [String] 
     def _compute_cache_filename(absolute_path_source, resolution, format)
       hash = Digest::SHA256.file(absolute_path_source)
-      short_hash = hash.hexdigest()[0, HASH_LENGTH]
+      short_hash = hash.hexdigest()[0, 32]
 
       if resolution && resolution != "original"
         "#{short_hash}-#{resolution}.#{format}"
