@@ -3,8 +3,6 @@ require "mini_magick"
 
 module Jekyll
   module TranscodeImageFilters
-    CACHE_DIR_WEBP = "cache/webp/"
-    CACHE_DIR_JPG = "cache/jpg/"
     HASH_LENGTH = 32
 
     # Computes the name of the file in the cache.
@@ -69,26 +67,33 @@ module Jekyll
     # @param absolute_path_destination [String] As an example: "C:/jekyll/jekyll-transcode-image-filters/assets/image-a-processed.png" 
     def _process_img(absolute_path_source, absolute_path_destination, resolution, format)
       image = MiniMagick::Image.open(absolute_path_source)
-      image.format format
+      initial_size = image.size
 
-      if resolution && resolution != "original"
-        image.auto_orient
-        image.resize resolution
-        image.strip
+      image.combine_options do |b|
+        image.format format
+
+        if resolution && resolution != "original"
+          image.auto_orient
+          image.resize resolution
+          image.strip
+        end
       end
 
       image.write absolute_path_destination
+
+      puts "Transcoded image '#{absolute_path_source}' to '#{absolute_path_destination}' (#{initial_size / 1024}kb -> #{image.size / 1024}kb)"
     end
 
     # Transcodes an image to the given format and resolution. Processed files are cached to speed up builds.
     # @param relative_source_path [String] As an example: "/assets/image-a.png" or "/assets/image-b.bmp"
+    # @param cache_dir [String] Directory of the cache folder, as an example: "cache/bmp/"
     # @param resolution [String] As an example: 900x900
     # @param format [String] As an example: webp or jpg
     # @return [String] As an example: "/cache/webp/f69a4d50f20bb781f908db2b2b2c7739.webp"
-    def _transcode (relative_source_path, resolution, format)
+    def _transcode_image (relative_source_path, cache_dir, resolution, format)
       site = @context.registers[:site]
 
-      absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination = _compute_paths(site.source, relative_source_path, CACHE_DIR_WEBP, resolution, "webp")
+      absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination = _compute_paths(site.source, relative_source_path, cache_dir, resolution, format)
 
       # Guarantee the existence of the cache directory
       FileUtils.mkdir_p(absolute_path_cache)
@@ -98,9 +103,9 @@ module Jekyll
         return relative_path_destination
       else
         # otherwise, we process the file and add it to the cache
-        puts "Encoding '#{relative_source_path}' to '#{relative_path_destination}'"
-        _process_img(absolute_path_source, absolute_path_destination , resolution,  "webp")
-        site.static_files << Jekyll::StaticFile.new(site, site.source, CACHE_DIR_WEBP, file_name_destination)
+
+        _process_img(absolute_path_source, absolute_path_destination , resolution, format)
+        site.static_files << Jekyll::StaticFile.new(site, site.source, cache_dir, file_name_destination)
       end
 
       relative_path_destination
@@ -111,7 +116,7 @@ module Jekyll
     # @param resolution [String] As an example: 900x900, is optional
     # @return [String] As an example: "/cache/webp/f69a4d50f20bb781f908db2b2b2c7739.webp"
     def webp(relative_source_path, resolution = "original")
-      _transcode(relative_source_path, resolution, "webp")
+      _transcode_image(relative_source_path, "cache/webp/", resolution, "webp")
     end
 
     # Transcodes an image to the jpg format. Processed files are cached to speed up builds.
@@ -119,7 +124,15 @@ module Jekyll
     # @param resolution [String] As an example: 900x900, is optional
     # @return [String] As an example: "/cache/jpg/f69a4d50f20bb781f908db2b2b2c7739.jpg"
     def jpg(relative_source_path, resolution = "original")
-      _transcode(relative_source_path, resolution, "jpg")
+      _transcode_image(relative_source_path, "cache/jpg/", resolution, "jpg")
+    end
+
+    # Transcodes an image to the avif format. Processed files are cached to speed up builds.
+    # @param relative_source_path [String] As an example: "/assets/image-a.png" or "/assets/image-b.bmp"
+    # @param resolution [String] As an example: 900x900, is optional
+    # @return [String] As an example: "/cache/avif/f69a4d50f20bb781f908db2b2b2c7739.avif"
+    def avif(relative_source_path, resolution = "original")
+      _transcode_image(relative_source_path, "cache/avif/", resolution, "avif")
     end
   end
 end
