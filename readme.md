@@ -16,7 +16,7 @@ Both filters support an optional parameter for resizing images. For example:
 
 ### Use case: compressing images
 
-These filters enable you to automatically convert any common image format into the best browser-friendly format that the browser of a user supports. This can significantly reduce the bandwidth that may be necessary to load the image. 
+These filters enable you to automatically convert common image formats into the most efficient, browser-friendly format supported by the user's browser. [Serving images in modern formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/) can significantly reduce the bandwidth required to load images.
 
 ```liquid
 {% assign imagePath = "assets/images/some-image.bmp" %}
@@ -40,6 +40,14 @@ This is converted by Jekyll into:
 
   <img class="thumbnail-image" src="/assets/thumbnails-wide/tournament-cybran-01-2024.png" alt="Some alternative text about the image">
 </picture>
+```
+
+For example, when processing a generic Full HD image, the following compression results were observed:
+
+```
+Transcoded image 'src/assets/thumbnails-wide/uef-base.png' to 'src/cache/avif/9a50001a863a24ae8f0d847488b1ce39.avif' (2928kb -> 122kb)
+Transcoded image 'src/assets/thumbnails-wide/uef-base.png' to 'src/cache/webp/9a50001a863a24ae8f0d847488b1ce39.webp' (2928kb -> 191kb)
+Transcoded image 'src/assets/thumbnails-wide/uef-base.png' to 'src/cache/jpg/9a50001a863a24ae8f0d847488b1ce39.jpg' (2928kb -> 838kb)
 ```
 
 ### Use case: responsive images
@@ -115,6 +123,7 @@ bundle install
 
 ## References
 
+- [Serve images in modern formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)
 - [Responsive images](https://developer.mozilla.org/en-US/docs/Web/HTML/Responsive_images)
 - [Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 - [Optimize Cumulative Layout Shift](https://web.dev/articles/optimize-cls)
