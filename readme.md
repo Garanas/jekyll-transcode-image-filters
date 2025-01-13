@@ -61,7 +61,6 @@ end
 
 - [Responsive images by MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Responsive_images)
 - [Optimize Cumulative Layout Shift](https://web.dev/articles/optimize-cls)
-- []
 
 ### Guides
 
