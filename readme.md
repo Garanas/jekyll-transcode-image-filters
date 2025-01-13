@@ -91,6 +91,7 @@ bundle install
 - [Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 - [Optimize Cumulative Layout Shift](https://web.dev/articles/optimize-cls)
 - [WebP compression study](https://developers.google.com/speed/webp/docs/webp_study)
+- [Comprehensive Image Quality Assessment (IQA) of JPEG, WebP, HEIF and AVIF Formats](https://osf.io/preprints/osf/ud7w4)
 
 ### Guides
 
