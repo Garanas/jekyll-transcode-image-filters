@@ -124,11 +124,17 @@ bundle install
 ## References
 
 - [Serve images in modern formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/)
-- [Responsive images](https://developer.mozilla.org/en-US/docs/Web/HTML/Responsive_images)
-- [Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 - [Optimize Cumulative Layout Shift](https://web.dev/articles/optimize-cls)
 - [WebP compression study](https://developers.google.com/speed/webp/docs/webp_study)
 - [Comprehensive Image Quality Assessment (IQA) of JPEG, WebP, HEIF and AVIF Formats](https://osf.io/preprints/osf/ud7w4)
+
+### Mozilla
+
+- [<picture>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+- [<source>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source)
+- [<img>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img)
+- [Responsive images](https://developer.mozilla.org/en-US/docs/Web/HTML/Responsive_images)
+- [Image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 
 ### Guides
 
