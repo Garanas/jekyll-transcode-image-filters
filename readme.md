@@ -13,37 +13,13 @@ Both filters accept a conditional parameter that allows you to resize an image. 
 <picture>
   {% assign imagePath = assetsFolder | append: include.url %}
   
-  <source
-    media="(max-width: 960px)"
-    srcset="{{ imagePath | webp: "240x135" }}"
-    type="image/webp"
-  >
-  <source
-    media="(max-width: 1920px)"
-    srcset="{{ imagePath | webp: "480x270" }}"
-    type="image/webp"
-  >
-  <source
-    media="(max-width: 2560px)"
-    srcset="{{ imagePath | webp: "960x540"}}"
-    type="image/webp"
-  >
+  <source media="(max-width: 960px)" srcset="{{ imagePath | webp: "240x135" }}" type="image/webp">
+  <source media="(max-width: 1920px)" srcset="{{ imagePath | webp: "480x270" }}" type="image/webp">
+  <source media="(max-width: 2560px)" srcset="{{ imagePath | webp: "960x540"}}" type="image/webp">
 
-  <source
-    media="(max-width: 960px)"
-    srcset="{{ imagePath | jpg: "240x135" }}"
-    type="image/jpeg"
-  >
-  <source
-    media="(max-width: 1920px)"
-    srcset="{{ imagePath | jpg: "480x270" }}"
-    type="image/jpeg"
-  >
-  <source
-    media="(max-width: 2560px)"
-    srcset="{{ imagePath | jpg: "960x540" }}"
-    type="image/jpeg"
-  >
+  <source media="(max-width: 960px)" srcset="{{ imagePath | jpg: "240x135" }}" type="image/jpeg">
+  <source media="(max-width: 1920px)" srcset="{{ imagePath | jpg: "480x270" }}" type="image/jpeg">
+  <source media="(max-width: 2560px)" srcset="{{ imagePath | jpg: "960x540" }}" type="image/jpeg">
 
   <img class="thumbnail-image" src="{{ imagePath | relative_url }}" alt="{{include.alt}}">
 </picture>
