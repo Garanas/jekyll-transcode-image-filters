@@ -14,6 +14,34 @@ Both filters support an optional parameter for resizing images. For example:
 {{ imagePath | webp: "480x270" }}
 ```
 
+### Use case: compressing images
+
+These filters enable you to automatically convert any common image format into the best browser-friendly format that the browser of a user supports. This can significantly reduce the bandwidth that may be necessary to load the image. 
+
+```liquid
+{% assign imagePath = "assets/images/some-image.bmp" %}
+
+<picture>
+  <source srcset="{{ imagePath | avif | relative_url }}" type="image/avif">
+  <source srcset="{{ imagePath | webp | relative_url }}" type="image/webp">
+  <source srcset="{{ imagePath | jpg | relative_url }}" type="image/jpeg">
+
+  <img class="image" src="{{ imagePath | relative_url }}" alt="{{include.alt}}">
+</picture>
+```
+
+This is converted by Jekyll into:
+
+```liquid
+<picture>
+  <source srcset="/cache/avif/4271c8a52c6e4271ae912271f5e43f20.avif" type="image/avif">
+  <source srcset="/cache/webp/4271c8a52c6e4271ae912271f5e43f20.webp" type="image/webp">
+  <source srcset="/cache/jpg/4271c8a52c6e4271ae912271f5e43f20.jpg" type="image/jpeg">
+
+  <img class="thumbnail-image" src="/assets/thumbnails-wide/tournament-cybran-01-2024.png" alt="Some alternative text about the image">
+</picture>
+```
+
 ### Use case: responsive images
 
 These filters enable declarative creation of responsive images. Here's an example [include](https://jekyllrb.com/docs/includes/) template for a responsive thumbnail:
@@ -24,18 +52,18 @@ These filters enable declarative creation of responsive images. Here's an exampl
 <picture>
   {% assign imagePath = assetsFolder | append: include.url %}
   
-  <source media="(max-width: 960px)" srcset="{{ imagePath | avif: "240x135" }}" type="image/avif">
-  <source media="(max-width: 1920px)" srcset="{{ imagePath | avif: "480x270" }}" type="image/avif">
-  <source media="(max-width: 2560px)" srcset="{{ imagePath | avif: "960x540"}}" type="image/avif">
+  <source media="(max-width: 960px)" srcset="{{ imagePath | avif: "240x135" | relative_url }}" type="image/avif">
+  <source media="(max-width: 1920px)" srcset="{{ imagePath | avif: "480x270" | relative_url }}" type="image/avif">
+  <source media="(max-width: 2560px)" srcset="{{ imagePath | avif: "960x540" | relative_url}}" type="image/avif">
 
 
-  <source media="(max-width: 960px)" srcset="{{ imagePath | webp: "240x135" }}" type="image/webp">
-  <source media="(max-width: 1920px)" srcset="{{ imagePath | webp: "480x270" }}" type="image/webp">
-  <source media="(max-width: 2560px)" srcset="{{ imagePath | webp: "960x540"}}" type="image/webp">
+  <source media="(max-width: 960px)" srcset="{{ imagePath | webp: "240x135" | relative_url }}" type="image/webp">
+  <source media="(max-width: 1920px)" srcset="{{ imagePath | webp: "480x270" | relative_url }}" type="image/webp">
+  <source media="(max-width: 2560px)" srcset="{{ imagePath | webp: "960x540" | relative_url}}" type="image/webp">
 
-  <source media="(max-width: 960px)" srcset="{{ imagePath | jpg: "240x135" }}" type="image/jpeg">
-  <source media="(max-width: 1920px)" srcset="{{ imagePath | jpg: "480x270" }}" type="image/jpeg">
-  <source media="(max-width: 2560px)" srcset="{{ imagePath | jpg: "960x540" }}" type="image/jpeg">
+  <source media="(max-width: 960px)" srcset="{{ imagePath | jpg: "240x135" | relative_url }}" type="image/jpeg">
+  <source media="(max-width: 1920px)" srcset="{{ imagePath | jpg: "480x270" | relative_url }}" type="image/jpeg">
+  <source media="(max-width: 2560px)" srcset="{{ imagePath | jpg: "960x540" | relative_url }}" type="image/jpeg">
 
   <img class="thumbnail-image" src="{{ imagePath | relative_url }}" alt="{{include.alt}}">
 </picture>
@@ -57,7 +85,7 @@ This is converted by Jekyll into:
   <source media="(max-width: 1920px)" srcset="cache/webp/4271c8a52c6e4271ae912271f5e43f20-480x270.webp" type="image/jpeg">
   <source media="(max-width: 2560px)" srcset="cache/webp/4271c8a52c6e4271ae912271f5e43f20-960x540.webp" type="image/jpeg">
 
-  <img class="thumbnail-image" src="/assets/thumbnails-wide/tournament-event-01-2024.png" alt="">
+  <img class="thumbnail-image" src="/assets/thumbnails-wide/tournament-cybran-01-2024.png" alt="Some alternative text about the image">
 </picture>
 ```
 
