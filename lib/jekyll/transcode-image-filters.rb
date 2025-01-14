@@ -52,14 +52,6 @@ module Jekyll
       File.exist?(absolute_path_destination)
     end
 
-    # Determine whether the file in the cache is still valid. It does so by comparing the modification times of the files.
-    # @param absolute_path_source [String] As an example: "C:/jekyll/jekyll-transcode-image-filters"
-    # @param absolute_path_destination [String] As an example: "/assets/image-a.png" or "/assets/image-a.bmp"
-    # @return [Boolean] If true, the file should be skipped.
-    def _valid_cache? (absolute_path_source, absolute_path_destination)
-      File.mtime(absolute_path_destination) >= File.mtime(absolute_path_source)
-    end
-
     # Read, process, and write the (new) image to disk.
     # @param absolute_path_source [String] As an example: "C:/jekyll/jekyll-transcode-image-filters/assets/image-a.png"
     # @param absolute_path_destination [String] As an example: "C:/jekyll/jekyll-transcode-image-filters/assets/image-a-processed.png" 
@@ -96,7 +88,7 @@ module Jekyll
       # Guarantee the existence of the cache directory
       FileUtils.mkdir_p(absolute_path_cache)
 
-      if _in_cache?(absolute_path_source, absolute_path_destination) && _valid_cache?(absolute_path_source, absolute_path_destination)
+      if _in_cache?(absolute_path_source, absolute_path_destination)
         # if the file is cached and valid we can just return the relative path
         return relative_path_destination
       else
