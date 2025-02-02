@@ -99,6 +99,8 @@ This is converted by Jekyll into:
 
 ## Installation
 
+This gem depends on [MiniMagick](https://github.com/minimagick/minimagick) which requires the command-line tool [ImageMagick](https://imagemagick.org/) to be installed and available on your path variable.
+
 Add the gem to your Jekyll site's Gemfile under the jekyll_plugins group:
 
 ```ruby
