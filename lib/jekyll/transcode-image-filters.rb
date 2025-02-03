@@ -3,6 +3,15 @@ require "mini_magick"
 
 module Jekyll
   module TranscodeImageFilters
+
+    # Computes a sanitized name for use as a directory.
+    # @param name The (file) name to sanitize.
+    # @return [String] 
+    def _sanitize_name(name)
+      # Replace invalid characters with `_` (Windows and Unix-safe)
+      name.gsub(/[<>:"\/\\|?*\n\r]/, '_').strip
+    end
+
     # Computes the name of the file in the cache.
     # @param absolute_path_source [String] Full path to the source file
     # @param resolution [String] As an example: 900x900
@@ -22,7 +31,7 @@ module Jekyll
     # Compute all necessary paths for the plugin.
     # @param absolute_path_site [String] As an example: "C:/jekyll/jekyll-transcode-image-filters"
     # @param relative_path_source [String] As an example: "/assets/image-a.png" or "/assets/style/main.css"
-    # @param cache_dir [String] Directory of the cache folder, as an example: "cache/bmp/"
+    # @param relative_cache_dir [String] Directory of the cache folder, as an example: "cache/bmp/"
     # @param resolution [String] As an example: 900x900
     # @param format [String] As an example: webp or jpg
     # @return [Array(String, String, String, String, String)]
@@ -31,15 +40,17 @@ module Jekyll
     # * [String] absolute_path_cache - Full path to the cache directory
     # * [String] file_name_destination - Name of the destination file
     # * [String] relative_path_destination - Relative path to the destination file
-    def _compute_paths(absolute_path_site, relative_path_source, cache_dir, resolution, format)
+    def _compute_paths(absolute_path_site, relative_path_source, relative_cache_dir, resolution, format)
       absolute_path_source = File.join(absolute_path_site, relative_path_source)
       raise "No file found at #{absolute_path_source}" unless File.readable?(absolute_path_source)
 
+      file_name_source = _sanitize_name(File.basename(relative_path_source, ".*"))
+      file_name_source_sanitized = _sanitize_name(file_name_source)
       file_name_destination = _compute_cache_filename(absolute_path_source, resolution, format)
 
-      absolute_path_cache = File.join(absolute_path_site, cache_dir)
+      absolute_path_cache = File.join(absolute_path_site, relative_cache_dir, file_name_source_sanitized)
       absolute_path_destination = File.join(absolute_path_cache, file_name_destination)
-      relative_path_destination = File.join(cache_dir, file_name_destination)
+      relative_path_destination = File.join(relative_cache_dir, file_name_source_sanitized, file_name_destination)
 
       [absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination]
     end
