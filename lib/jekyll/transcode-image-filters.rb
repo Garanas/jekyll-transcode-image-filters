@@ -40,6 +40,7 @@ module Jekyll
     # * [String] absolute_path_cache - Full path to the cache directory
     # * [String] file_name_destination - Name of the destination file
     # * [String] relative_path_destination - Relative path to the destination file
+    # * [String] relative_path_cache - Relative path to the cache directory
     def _compute_paths(absolute_path_site, relative_path_source, relative_cache_dir, resolution, format)
       absolute_path_source = File.join(absolute_path_site, relative_path_source)
       raise "No file found at #{absolute_path_source}" unless File.readable?(absolute_path_source)
@@ -48,11 +49,12 @@ module Jekyll
       file_name_source_sanitized = _sanitize_name(file_name_source)
       file_name_destination = _compute_cache_filename(absolute_path_source, resolution, format)
 
+      relative_path_cache = File.join(relative_cache_dir, file_name_source_sanitized)
       absolute_path_cache = File.join(absolute_path_site, relative_cache_dir, file_name_source_sanitized)
       absolute_path_destination = File.join(absolute_path_cache, file_name_destination)
       relative_path_destination = File.join(relative_cache_dir, file_name_source_sanitized, file_name_destination)
 
-      [absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination]
+      [absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination, relative_path_cache]
     end
 
     # Determine whether the file exists in the cache.
@@ -94,7 +96,7 @@ module Jekyll
     def _transcode_image (relative_source_path, cache_dir, resolution, format)
       site = @context.registers[:site]
 
-      absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination = _compute_paths(site.source, relative_source_path, cache_dir, resolution, format)
+      absolute_path_source, absolute_path_destination, absolute_path_cache, file_name_destination, relative_path_destination, relative_path_cache = _compute_paths(site.source, relative_source_path, cache_dir, resolution, format)
 
       # Guarantee the existence of the cache directory
       FileUtils.mkdir_p(absolute_path_cache)
@@ -106,7 +108,7 @@ module Jekyll
         # otherwise, we process the file and add it to the cache
 
         _process_img(absolute_path_source, absolute_path_destination , resolution, format)
-        site.static_files << Jekyll::StaticFile.new(site, site.source, cache_dir, file_name_destination)
+        site.static_files << Jekyll::StaticFile.new(site, site.source, relative_path_cache, file_name_destination)
       end
 
       relative_path_destination
