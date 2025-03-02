@@ -1,5 +1,5 @@
-BIN_FOLDER = "bin"
-GEMSPEC = ".gemspec"
+BIN_FOLDER = 'bin'
+GEMSPEC = '.gemspec'
 
 def _package_name(spec)
   package_name = spec.name
@@ -16,7 +16,7 @@ task :build do
 
   # Build the gem
   system("gem build #{GEMSPEC}")
-  spec = Gem::Specification::load(GEMSPEC)
+  spec = Gem::Specification.load(GEMSPEC)
 
   # Move the artifact into the bin folder
   package_name = _package_name(spec)
@@ -25,20 +25,20 @@ end
 
 task :test do
   # Test the gem
-  system("bundle exec rspec .")
+  system('bundle exec rspec .')
 end
 
-task :install => :build do
+task install: :build do
   # Uninstall and install the gem
-  spec = Gem::Specification::load(GEMSPEC)
+  spec = Gem::Specification.load(GEMSPEC)
   package_name = _package_name(spec)
   system("gem uninstall #{package_name}")
   system("gem install #{BIN_FOLDER}/#{package_name}.gem")
 end
 
-task :publish => :build do
+task publish: :build do
   # Build and push the gem
-  spec = Gem::Specification::load(GEMSPEC)
+  spec = Gem::Specification.load(GEMSPEC)
   package_name = _package_name(spec)
   puts(package_name)
   system("gem push #{BIN_FOLDER}/#{package_name}.gem")

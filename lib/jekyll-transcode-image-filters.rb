@@ -1,1 +1,1 @@
-require "jekyll/transcode-image-filters"
+require 'jekyll/transcode-image-filters'
