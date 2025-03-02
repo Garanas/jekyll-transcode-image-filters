@@ -23,6 +23,11 @@ task :build do
   File.rename("#{package_name}.gem", "#{BIN_FOLDER}/#{package_name}.gem")
 end
 
+task :test do
+  # Test the gem
+  system("bundle exec rspec .")
+end
+
 task :install => :build do
   # Uninstall and install the gem
   spec = Gem::Specification::load(GEMSPEC)
