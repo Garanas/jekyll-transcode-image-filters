@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 BIN_FOLDER = 'bin'
 GEMSPEC = '.gemspec'
 
