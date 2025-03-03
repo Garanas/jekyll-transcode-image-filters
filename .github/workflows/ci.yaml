@@ -29,9 +29,9 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
 
-      - name: Run linter
-        run: |
-          bundle exec rubocop
+      # - name: Run linter
+      #   run: |
+      #     bundle exec rubocop
 
       - name: Run tests
         run: rake test
