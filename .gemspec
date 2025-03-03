@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/jekyll-transcode-image-filters/version'
+require_relative 'lib/jekyll_transcode_image_filters/version'
 
 Gem::Specification.new do |spec|
   spec.name        = 'jekyll-transcode-image-filters'
   spec.version     = Jekyll::TranscodeImageFilters::VERSION
-  spec.date        = '2024-12-31'
   spec.summary     = <<~SUMMARY
     Adds liquid filters to create responsive images and transcode them to browser-friendly formatspec.
   SUMMARY
@@ -15,12 +14,12 @@ Gem::Specification.new do |spec|
     An optional parameter is available to also resize the image, as an example:
     `{{ imagePath | webp: "480x270" }}`
   DESCRIPTION
-  spec.authors     = ['Willem \'Jip\' Wijnia']
+  spec.authors     = ["Willem 'Jip' Wijnia"]
   spec.files       = Dir['lib/**/*']
   spec.homepage    = 'https://github.com/Garanas/jekyll-transcode-image-filters'
   spec.license     = 'MIT'
 
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 2.5.0'
 
   spec.add_dependency 'jekyll', '> 3.3', '< 5.0'
   spec.add_dependency 'mini_magick', '~> 4.8'

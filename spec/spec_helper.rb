@@ -2,9 +2,12 @@
 
 require 'jekyll'
 require 'mini_magick'
-require File.expand_path('../lib/jekyll-transcode-image-filters', __dir__)
+require File.expand_path('../lib/jekyll_transcode_image_filters', __dir__)
 
 Jekyll.logger.log_level = :error
+
+SOURCE_DIR = File.expand_path('fixture', __dir__)
+DEST_DIR   = File.expand_path('dest',     __dir__)
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
@@ -15,9 +18,6 @@ RSpec.configure do |config|
     # Delete the cache directory
     FileUtils.rm_rf(File.join(SOURCE_DIR, 'cache'))
   end
-
-  SOURCE_DIR = File.expand_path('fixture', __dir__)
-  DEST_DIR   = File.expand_path('dest',     __dir__)
 
   def source_dir(*files)
     File.join(SOURCE_DIR, *files)

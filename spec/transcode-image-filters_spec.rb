@@ -5,16 +5,20 @@ require 'spec_helper'
 describe(Jekyll::TranscodeImageFilters) do
   let(:overrides) { {} }
   let(:config) do
-    Jekyll.configuration(Jekyll::Utils.deep_merge_hashes({
-                                                           'full_rebuild' => true,
-                                                           'source' => source_dir,
-                                                           'destination' => dest_dir,
-                                                           'url' => 'https://jipwijnia.nl',
-                                                           'name' => 'My awesome test',
-                                                           'author' => {
-                                                             'name' => 'Dr. Jekyll'
-                                                           }
-                                                         }, overrides))
+    Jekyll.configuration(
+      Jekyll::Utils.deep_merge_hashes(
+        {
+          'full_rebuild' => true,
+          'source' => source_dir,
+          'destination' => dest_dir,
+          'url' => 'https://jipwijnia.nl',
+          'name' => 'My awesome test',
+          'author' => {
+            'name' => 'Dr. Jekyll'
+          }
+        }, overrides
+      )
+    )
   end
   let(:site) { Jekyll::Site.new(config) }
   let(:jekyll_env) { 'development' }
